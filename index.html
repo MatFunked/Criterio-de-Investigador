@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparador de Fuentes</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+    <header class="main-header">
+        <h1>Criterio de Investigador</h1>
+        <p class="subtitle">Comparación de textos con IA • Fomento del Pensamiento Crítico</p>
+    </header>
+    
+    <main class="workspace">
+        <div class="tabs-container">
+            <button id="btn-tab-comparador" class="tab-btn active">Comparador de Texto</button>
+            <button id="btn-tab-investigacion" class="tab-btn">Investigación por URL (Próximamente)</button>
+        </div>
+
+        <div id="tab-comparador" class="tab-content">
+            <div class="flex-inputs">
+                <div class="input-box">
+                    <label for="fuenteA">Texto / Fuente A:</label>
+                    <textarea id="fuenteA" placeholder="Pega el primer artículo o noticia aquí..."></textarea>
+                </div>
+                <div class="input-box">
+                    <label for="fuenteB">Texto / Fuente B:</label>
+                    <textarea id="fuenteB" placeholder="Pega la versión contrapuesta o segunda fuente aquí..."></textarea>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button id="btn-analizar">Comparar y Buscar Irregularidades</button>
+            </div>
+        </div>
+
+        <div id="tab-investigacion" class="tab-content" style="display: none;">
+            <div class="url-box" style="margin-bottom: 20px;">
+                <label for="urlInvestigar">Introduce la URL del artículo tecnológico:</label>
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <input
+                        type="text"
+                        id="urlInvestigar"
+                        value="🚧 Función en desarrollo. La extracción automática de URLs estará disponible próximamente."
+                        readonly
+                        style="
+                            flex: 1;
+                            padding: 14px;
+                            border: 1px solid #cbd5e1;
+                            border-radius: 10px;
+                            font-size: 0.95rem;
+                            background-color: #f1f5f9;
+                            color: #64748b;
+                            cursor: not-allowed;
+                        ">
+                    <button
+                        id="btn-extraer"
+                        disabled
+                        title="Función en desarrollo"
+                        style="width: auto; padding: 0 24px;">
+                        Próximamente
+                    </button>
+                </div>
+            </div>
+            <div class="info-alert">
+                <p><strong>Espacio Reservado para la URL-Update:</strong> El espacio visual está listo. Hace falta arreglar conflictos con <em>"I'm not a robot"</em>.</p>
+            </div>
+        </div>
+
+        <div id="loading" class="status-box loading-box" style="display: none;">
+            <div class="spinner"></div>
+            <p>La Inteligencia Artificial está procesando y cruzando la información... Por favor espera.</p>
+        </div>
+        
+        <div id="result" class="status-box result-box" style="display: none;"></div>
+    </main>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

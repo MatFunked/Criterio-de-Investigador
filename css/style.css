@@ -1,0 +1,176 @@
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #cbd5e1;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    background: var(--bg-card);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.main-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.main-header h1 {
+    font-size: 2rem;
+    color: #1e3a8a;
+    margin-bottom: 8px;
+}
+
+.flex-inputs {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.input-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+textarea {
+    height: 220px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    resize: none;
+    font-size: 0.95rem;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+}
+
+button:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.status-box {
+    display: none;
+    padding: 24px;
+    border-radius: 10px;
+    margin-top: 24px;
+}
+
+.loading-box {
+    text-align: center;
+    background-color: #f1f5f9;
+    color: var(--primary-color);
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid #cbd5e1;
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    margin: 0 auto 12px auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.result-box {
+    background-color: #f8fafc;
+    border-left: 5px solid var(--primary-color);
+    display: block; /* Cambio clave: permite renderizar los divs e ítems estructurados */
+}
+
+/* --- DISEÑO DE LAS NUEVAS PESTAÑAS (TABS) --- */
+.tabs-container {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 12px;
+}
+
+.tab-btn {
+    width: auto;
+    padding: 10px 20px;
+    background: none;
+    color: var(--text-muted);
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+    background-color: #f1f5f9;
+    color: #1e3a8a;
+}
+
+.tab-btn.active {
+    background-color: #e0e7ff;
+    color: #1e40af;
+}
+
+.info-alert {
+    background-color: #f8fafc;
+    border-left: 4px solid #3b82f6;
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.info-alert p {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.5;
+    margin: 0;
+}
