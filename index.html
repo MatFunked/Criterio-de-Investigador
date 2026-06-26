@@ -16,11 +16,31 @@
     
     <main class="workspace">
         <div class="tabs-container">
-            <button id="btn-tab-comparador" class="tab-btn active">Comparador de Texto</button>
+            <button id="btn-tab-docs" class="tab-btn active">Comparador de Documentos</button>
+            <button id="btn-tab-texto" class="tab-btn">Comparador de Texto Plano</button>
             <button id="btn-tab-investigacion" class="tab-btn">Investigación por URL (Próximamente)</button>
         </div>
 
-        <div id="tab-comparador" class="tab-content">
+        <div id="tab-docs" class="tab-content" style="display: block;">
+            <div class="flex-inputs">
+                <div class="input-box file-drop-zone">
+                    <label for="fileA">Documento Fuente A (.txt, .pdf, .docx):</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="fileA" accept=".txt,.pdf,.docx">
+                        <div class="file-custom-placeholder">Seleccionar o arrastrar archivo A</div>
+                    </div>
+                </div>
+                <div class="input-box file-drop-zone">
+                    <label for="fileB">Documento Fuente B (.txt, .pdf, .docx):</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="fileB" accept=".txt,.pdf,.docx">
+                        <div class="file-custom-placeholder">Seleccionar o arrastrar archivo B</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-texto" class="tab-content" style="display: none;">
             <div class="flex-inputs">
                 <div class="input-box">
                     <label for="fuenteA">Texto / Fuente A:</label>
@@ -28,46 +48,33 @@
                 </div>
                 <div class="input-box">
                     <label for="fuenteB">Texto / Fuente B:</label>
-                    <textarea id="fuenteB" placeholder="Pega la versión contrapuesta o segunda fuente aquí..."></textarea>
+                    <textarea id="fuenteB" placeholder="Pega la versión contrapuesta aquí..."></textarea>
                 </div>
-            </div>
-
-            <div class="actions">
-                <button id="btn-analizar">Comparar y Buscar Irregularidades</button>
             </div>
         </div>
 
         <div id="tab-investigacion" class="tab-content" style="display: none;">
-            <div class="url-box" style="margin-bottom: 20px;">
-                <label for="urlInvestigar">Introduce la URL del artículo tecnológico:</label>
-                <div style="display: flex; gap: 10px; margin-top: 8px;">
-                    <input
-                        type="text"
-                        id="urlInvestigar"
-                        value="🚧 Función en desarrollo. La extracción automática de URLs estará disponible próximamente."
+            <div class="url-input-container">
+                <label for="urlInput">Introduce la URL del artículo:</label>
+                <div style="display: flex; gap: 12px; margin-top: 8px;">
+                    <input 
+                        type="url" 
+                        id="urlInput" 
+                        placeholder="https://ejemplo.com/articulo-tecnologico" 
                         readonly
-                        style="
-                            flex: 1;
-                            padding: 14px;
-                            border: 1px solid #cbd5e1;
-                            border-radius: 10px;
-                            font-size: 0.95rem;
-                            background-color: #f1f5f9;
-                            color: #64748b;
-                            cursor: not-allowed;
-                        ">
-                    <button
-                        id="btn-extraer"
-                        disabled
-                        title="Función en desarrollo"
-                        style="width: auto; padding: 0 24px;">
-                        Próximamente
-                    </button>
+                        style="flex: 1; padding: 14px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 0.95rem; background-color: #f1f5f9; color: #64748b; cursor: not-allowed;">
+                    <button id="btn-extraer" disabled title="Función en desarrollo" style="width: auto; padding: 0 24px;">Próximamente</button>
                 </div>
             </div>
             <div class="info-alert">
                 <p><strong>Espacio Reservado para la URL-Update:</strong> El espacio visual está listo. Hace falta arreglar conflictos con <em>"I'm not a robot"</em>.</p>
             </div>
+        </div>
+
+        <div class="action-container" style="margin-top: 24px; text-align: center;">
+            <button id="btn-analizar" style="width: 100%; max-width: 300px; padding: 14px 28px; font-size: 1rem; font-weight: bold;">
+                Analizar y Comparar
+            </button>
         </div>
 
         <div id="loading" class="status-box loading-box" style="display: none;">

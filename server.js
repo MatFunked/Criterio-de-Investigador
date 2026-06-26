@@ -1,52 +1,46 @@
-import 'dotenv/config';
+// server.js
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
-import Groq from 'groq-sdk';
 import path from 'path';
 import { fileURLToPath } from 'url';
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import multer from 'multer'; 
+import cors from 'cors'; 
+
+// Importamos ambos controladores desde el archivo modular
+import { 
+    compararArchivosController, 
+    compararTextoPlanoController 
+} from './src/controllers/compareController.js';
+
 const app = express();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const port = process.env.PORT || 3000;
-// Inicializar Groq de manera segura en el servidor
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-app.use(express.json());
-// Servir automáticamente tus carpetas de frontend de imagen_44ca28.png
+
+// Middleware
+app.use(cors()); 
+app.use(express.json()); // Crucial para que lea el JSON del texto plano
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+// Archivos Estáticos
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
-// Servir archivos raíz
+
+// Ruta principal
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-app.get('/povs.txt', (req, res) => res.sendFile(path.join(__dirname, 'povs.txt')));
-// Endpoint seguro para las peticiones de IA
-// Endpoint seguro para las peticiones de IA
-app.post('/api/chat', async (req, res) => {
-    try {
-        // 1. Extraemos de forma segura el contenido del prompt enviado por el cliente
-        const clientMessages = req.body.messages;
-        const promptTexto = (clientMessages && clientMessages[0]) ? clientMessages[0].content : '';
 
-        // 2. Si por alguna razón viene vacío, respondemos un error controlado antes de llamar a Groq
-        if (!promptTexto) {
-            return res.status(400).json({ error: "El contenido del mensaje no puede estar vacío." });
-        }
+// Endpoint para Documentos (.pdf, .txt, .docx)
+app.post(
+    '/api/compare-files', 
+    upload.fields([{ name: 'fileA', maxCount: 1 }, { name: 'fileB', maxCount: 1 }]), 
+    compararArchivosController
+);
 
-        // 3. Creamos la petición garantizando la lista de mapeos (roles y contenidos) que Groq exige
-        const completion = await groq.chat.completions.create({
-            messages: [
-                {
-                    role: "user",
-                    content: promptTexto
-                }
-            ],
-            model: "llama-3.1-8b-instant",
-            temperature: 0.2
-        });
+// Endpoint para Texto Plano (Restaurado y Modularizado)
+app.post('/api/chat', compararTextoPlanoController);
 
-        res.json(completion);
-    } catch (error) {
-        console.error("Error detallado en el servidor intermedio:", error);
-        res.status(500).json({ 
-            error: "Error interno del servidor al procesar la solicitud con Groq.",
-            details: error.message 
-        });
-    }
+app.listen(port, () => {
+    console.log(`Servidor corriendo en http://localhost:${port}`);
 });
-app.listen(port, () => console.log(`Servidor activo en puerto ${port}`));

@@ -1,5 +1,13 @@
+// js/api.js
+
+// Detectar automáticamente si estamos en local o en producción
+const BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:3000'
+    : '';
+
+// Función para texto plano original
 export async function enviarAAPI(txtA, txtB) {
-    const URL_ENDPOINT = "/api/chat";
+    const URL_ENDPOINT = `${BASE_URL}/api/chat`;
 
     const promptInstrucciones = `Actúa como un sistema analítico de fact-checking. Te proporcionaré dos textos sobre un mismo tema tecnológico. Tu objetivo exclusivo es detectar contradicciones, discrepancias numéricas o de afirmaciones clave de manera objetiva.
     
@@ -11,17 +19,27 @@ export async function enviarAAPI(txtA, txtB) {
 
     const response = await fetch(URL_ENDPOINT, {
         method: 'POST',
-        headers: { 
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-            messages: [{ role: "user", content: contenidoPrompt }]
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [{ role: "user", content: contenidoPrompt }] })
     });
 
-    if (!response.ok) {
-        throw new Error(`Error en el servidor intermedio: ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`Error en el servidor: ${response.status}`);
+    return await response.json();
+}
 
+// Para enviar los archivos cargados (.txt, .pdf, .docx)
+export async function enviarArchivosAAPI(fileA, fileB) {
+    const URL_ENDPOINT = `${BASE_URL}/api/compare-files`;
+    
+    const formData = new FormData();
+    formData.append('fileA', fileA);
+    formData.append('fileB', fileB);
+
+    const response = await fetch(URL_ENDPOINT, {
+        method: 'POST',
+        body: formData
+    });
+
+    if (!response.ok) throw new Error(`Error al procesar archivos en el servidor: ${response.status}`);
     return await response.json();
 }
