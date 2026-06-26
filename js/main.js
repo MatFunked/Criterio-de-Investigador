@@ -88,7 +88,6 @@ document.getElementById('btn-analizar').addEventListener('click', async () => {
 
     try {
         setVisualLoading(true);
-        let data;
 
         if (currentTab === 'texto') {
             const txtA = document.getElementById('fuenteA').value.trim();

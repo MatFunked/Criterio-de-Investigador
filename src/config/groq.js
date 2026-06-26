@@ -1,10 +1,15 @@
 import dotenv from 'dotenv';
-// Forzamos la carga de las variables antes de inicializar la SDK
 dotenv.config();
 
 import Groq from 'groq-sdk';
 
-// Inicializamos Groq leyendo la variable cargada
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+// Forzamos la desactivación de la compresión Gzip en los headers 
+// para evitar el error ERR_STREAM_PREMATURE_CLOSE
+const groq = new Groq({ 
+    apiKey: process.env.GROQ_API_KEY,
+    defaultHeaders: {
+        'Accept-Encoding': 'identity' // Esto le dice a la API: "No me comprimas la respuesta"
+    }
+});
 
 export default groq;
